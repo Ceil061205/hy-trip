@@ -11,10 +11,15 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    copy: typeof import('./src/components/tab-bar/tab-bar copy.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TabBar: typeof import('./src/components/tab-bar/tab-bar.vue')['default']
     TabBar_01: typeof import('./src/components/tab-bar/tab-bar_01.vue')['default']
+    TabBar_02: typeof import('./src/components/tab-bar/tab-bar_02.vue')['default']
+    TabBar_03: typeof import('./src/components/tab-bar/tab-bar_03.vue')['default']
     VanButton: typeof import('vant/es')['Button']
+    VanTabbar: typeof import('vant/es')['Tabbar']
+    VanTabbarItem: typeof import('vant/es')['TabbarItem']
   }
 }
