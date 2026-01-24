@@ -1,6 +1,8 @@
-import hyRequest from '@/services/request/index.js';
-export function getHomeHotSuggesst() {
-  return hyRequest.get({ url: '/suggest/hotwords' }).then(res => {
-    return res.data;
+import hyRequest from '../request'
+export function getHomeHotSuggests() {
+  return hyRequest.get({
+    url: '/home/hotSuggests'
+  }).then(res => {
+    return res;
   })
 }

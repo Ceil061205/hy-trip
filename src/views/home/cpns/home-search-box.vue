@@ -31,7 +31,7 @@
     />
     <div class="hot-suggests">
       <div class="hot-suggest" v-for="(item, index) in hotSuggests" :key="index">
-        <span class="item" :style="{color: item.tagText.color, background: item.tagText.background.color}">{{ item.tagText.text }}</span>
+        <span class="item" :style="{color: item.tagText.color, background: item.tagText.background.color}">{{ item?.tagText.text }}</span>
       </div>
     </div>
   </div>
@@ -45,16 +45,8 @@ import { storeToRefs } from "pinia";
 import { formatMonthDay, getDiffDays } from "@/utils/format_data";
 import useHomeStore from "@/stores/modules/home";
 
-defineProps({
-  hotSuggests: {
-    type: Array,
-    default: () => [],
-  }
-});
-
 const router = useRouter();
 const cityName = ref("广州");
-
 const cityClick = () => {
   router.push("/city");
 };
@@ -82,6 +74,8 @@ const positionClick = () => {
 
 const cityStore = useCityStore();
 const { currentCity } = storeToRefs(cityStore);
+console.log(currentCity.value);
+
 
 const nowDate = new Date();
 const startDate = ref(formatMonthDay(new Date()));
@@ -97,7 +91,9 @@ const onConfirm = (value) => {
   showCa.value = false;
 };
 
-const { hotSuggests } = storeToRefs(useHomeStore());
+const homeStore = useHomeStore();
+homeStore.fetchHotSuggestData();
+const { hotSuggests } = storeToRefs(homeStore);
 
 
 </script>
