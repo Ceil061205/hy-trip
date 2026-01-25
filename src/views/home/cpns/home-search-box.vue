@@ -93,8 +93,8 @@ const stayCount = ref(getDiffDays(startDate.value, endDate.value)); // 入住天
 
 const showCa = ref(false);
 const onConfirm = (value) => {
-  mainStore.startDate = formatMonthDay(value[0]);
-  mainStore.endDate = formatMonthDay(value[1]);
+  mainStore.startDate = value[0];
+  mainStore.endDate = value[1];
   stayCount.value = getDiffDays(value[0], value[1]);
   showCa.value = false;
 };

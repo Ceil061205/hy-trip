@@ -27,7 +27,8 @@ const router = createRouter({
       path: '/search', 
       component: () => import('@/views/search/search.vue'),
       meta: { hideTabBar: true } // 自定义元信息，标记该页面需要隐藏 TabBar
-    }
+    },
+    { path: '/detail/:id', component: () => import('@/views/detail/detail.vue'), meta: { hideTabBar: true } },
   ]
 })
 

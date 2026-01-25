@@ -36,6 +36,7 @@ const props = defineProps({
 const itemStore = computed(() => {
   return Number(props.itemData?.commentScore || 0)
 });
+
 </script>
 
 <style scoped lang="less">
