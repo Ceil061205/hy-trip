@@ -12,13 +12,13 @@
       <!-- 拆分标签和日期，方便样式控制 -->
       <div class="date-item start">
         <div class="label">入住</div>
-        <div class="value">{{ startDate }}</div>
+        <div class="value">{{ startDateStr }}</div>
       </div>
       <!-- 中间分隔/入住时长 -->
       <div class="date-divider">共{{ stayCount }}晚</div>
       <div class="date-item end">
         <div class="label">离店</div>
-        <div class="value">{{ endDate }}</div>
+        <div class="value">{{ endDateStr }}</div>
       </div>
     </div>
     <van-calendar 
@@ -34,16 +34,22 @@
         <span class="item" :style="{color: item.tagText.color, background: item.tagText.background.color}">{{ item?.tagText.text }}</span>
       </div>
     </div>
+    <div class="search-btn">
+      <div class="btn" @click="searchBtnClick">
+        搜索
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import useCityStore from "@/stores/modules/citys";
 import { storeToRefs } from "pinia";
 import { formatMonthDay, getDiffDays } from "@/utils/format_data";
 import useHomeStore from "@/stores/modules/home";
+import useMainStore from "@/stores/modules/mainStore";
 
 const router = useRouter();
 const cityName = ref("广州");
@@ -77,23 +83,37 @@ const { currentCity } = storeToRefs(cityStore);
 console.log(currentCity.value);
 
 
-const nowDate = new Date();
-const startDate = ref(formatMonthDay(new Date()));
-const newDate = new Date().setDate(nowDate.getDate() + 1);
-const endDate = ref(formatMonthDay(newDate));
-const stayCount = ref(getDiffDays(nowDate, newDate)); // 入住天数，默认为1晚
+const mainStore = useMainStore();
+const { startDate, endDate } = storeToRefs(mainStore);
+
+
+const startDateStr = computed(() => formatMonthDay(startDate.value));
+const endDateStr = computed(() => formatMonthDay(endDate.value));
+const stayCount = ref(getDiffDays(startDate.value, endDate.value)); // 入住天数，默认为1晚
 
 const showCa = ref(false);
 const onConfirm = (value) => {
-  startDate.value = formatMonthDay(value[0]);
-  endDate.value = formatMonthDay(value[1]);
+  mainStore.startDate = formatMonthDay(value[0]);
+  mainStore.endDate = formatMonthDay(value[1]);
   stayCount.value = getDiffDays(value[0], value[1]);
   showCa.value = false;
 };
 
 const homeStore = useHomeStore();
-homeStore.fetchHotSuggestData();
+// homeStore.fetchHotSuggestData();
 const { hotSuggests } = storeToRefs(homeStore);
+
+const searchBtnClick = () => {
+  router.push({
+    path: "/search",
+    query: {
+      startDate: startDate.value,
+      endDate: endDate.value,
+      currentCity: currentCity.value.cityName
+    }
+  });
+};
+
 
 
 </script>
@@ -184,6 +204,25 @@ const { hotSuggests } = storeToRefs(homeStore);
       border-radius: 4px;
       padding: 4px 8px;
     }
+  }
+}
+
+.search-btn {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .btn {
+    width: 300px;
+    height: 38px;
+    max-height: 50px;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    border-radius: 20px;
+    color: #fff;
+    background-image: var(--theme-liner-gradient);
   }
 }
 </style>
