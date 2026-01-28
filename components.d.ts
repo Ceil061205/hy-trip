@@ -12,6 +12,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     copy: typeof import('./src/components/house-item/house-item-v1 copy.vue')['default']
+    DetailSection: typeof import('./src/components/detail-section/detail-section.vue')['default']
     HouseItemV1: typeof import('./src/components/house-item/house-item-v1.vue')['default']
     HouseItemV2: typeof import('./src/components/house-item-v3/house-item-v2.vue')['default']
     HouseItemV3: typeof import('./src/components/house-item-v3/house-item-v3.vue')['default']
@@ -27,11 +28,15 @@ declare module 'vue' {
     VanButton: typeof import('vant/es')['Button']
     VanCalendar: typeof import('vant/es')['Calendar']
     VanCell: typeof import('vant/es')['Cell']
+    VanIcon: typeof import('vant/es')['Icon']
     VanIndexAnchor: typeof import('vant/es')['IndexAnchor']
     VanIndexBar: typeof import('vant/es')['IndexBar']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanRate: typeof import('vant/es')['Rate']
     VanSearch: typeof import('vant/es')['Search']
+    VanSwipe: typeof import('vant/es')['Swipe']
+    VanSwipeItem: typeof import('vant/es')['SwipeItem']
+    VanSwipeItemc: typeof import('vant/es')['SwipeItemc']
     VanTab: typeof import('vant/es')['Tab']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
